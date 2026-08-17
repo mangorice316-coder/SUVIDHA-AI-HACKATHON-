@@ -1,0 +1,11 @@
+{
+  "id": "case-01",
+  "subject": "Physics",
+  "learnerLanguage": "Tamil",
+  "curriculumLanguage": "English",
+  "sourceText": "Applying Ampere's circuital law to a surface enclosing one plate of a charging capacitor reveals a missing term. Maxwell resolved this inconsistency by postulating the displacement current, which is directly proportional to the time-varying electric flux between the plates, thereby ensuring the continuity of magnetic field circulation.",
+  "selectedTerm": "missing term",
+  "learningObjective": "Understand why Ampere's Law required a displacement current term to preserve charge conservation across dielectric gaps.",
+  "expectedConcept": "A missing mathematical entity in a governing equation, not a missing vocabulary word.",
+  "notes": "Validates that multilingual students confuse colloquial 'term' with mathematical/calculus 'term'."
+}

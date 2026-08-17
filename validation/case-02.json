@@ -1,0 +1,11 @@
+{
+  "id": "case-02",
+  "subject": "Chemistry",
+  "learnerLanguage": "Hindi",
+  "curriculumLanguage": "English",
+  "sourceText": "When a chemical system at dynamic equilibrium is subjected to an external perturbation in temperature, pressure, or concentration, the equilibrium composition undergoes a spontaneous shift in the direction that counteracts the imposed disturbance.",
+  "selectedTerm": "external perturbation",
+  "learningObjective": "Understand Le Chatelier's principle and thermodynamic equilibrium responses to applied stressors.",
+  "expectedConcept": "An applied physical change or stressor in system conditions, not an accidental mistake or trouble.",
+  "notes": "Validates that machine translation renders 'perturbation' as 'trouble/mistake' rather than thermodynamic change."
+}

@@ -1,0 +1,11 @@
+{
+  "id": "case-03",
+  "subject": "Biology",
+  "learnerLanguage": "Telugu",
+  "curriculumLanguage": "English",
+  "sourceText": "Water moves down its chemical potential gradient across a semipermeable membrane via passive osmosis until the hydrostatic pressure counters the osmotic potential.",
+  "selectedTerm": "chemical potential gradient",
+  "learningObjective": "Understand passive transport and osmotic equilibrium in cellular membranes.",
+  "expectedConcept": "Difference in water concentration driving natural flow, analogous to water flowing downhill.",
+  "notes": "Validates bridging from mechanical slope analogies to formal thermodynamic potential gradients."
+}
