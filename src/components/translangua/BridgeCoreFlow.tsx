@@ -9,6 +9,9 @@ import { audioEngine } from '../../services/audioEngine';
 import { Hero3DCanvas } from '../common/Hero3DCanvas';
 import { LottieSuccessAnimation } from '../common/LottieSuccessAnimation';
 import { ScrollDriven3DExperience } from '../common/ScrollDriven3DExperience';
+import { SpotlightCard, MagneticButton } from '../common/MotionPrimitives';
+import { HaikeiSvgBackground } from '../common/HaikeiSvgBackground';
+import { RealtimeColorThemePicker } from '../common/RealtimeColorThemePicker';
 
 interface TermItem {
   id: string;
@@ -298,7 +301,13 @@ export const BridgeCoreFlow: React.FC = () => {
           SCREEN 1 — HOME / LANDING
           ======================================================== */}
       {currentScreen === 1 && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '22px', padding: '16px 8px', textAlign: 'center', maxWidth: '720px', margin: '0 auto' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '22px', padding: '16px 8px', textAlign: 'center', maxWidth: '720px', margin: '0 auto', position: 'relative' }}>
+          {/* Generative Haikei SVG Wave Mesh */}
+          <HaikeiSvgBackground opacity={0.2} />
+
+          {/* Realtime Color Palette Engine */}
+          <RealtimeColorThemePicker />
+
           {/* Interactive 3D WebGL Core */}
           <Hero3DCanvas />
 
