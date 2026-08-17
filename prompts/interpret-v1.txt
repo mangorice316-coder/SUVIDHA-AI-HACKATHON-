@@ -1,0 +1,2 @@
+Given the source STEM passage and the extracted academic term, determine the precise scientific/mathematical concept represented in this exact context.
+Do NOT output a generic dictionary definition. Anchor directly to the physical law or formula described in the source.

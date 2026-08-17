@@ -1,0 +1,2 @@
+Generate a quick, 1-minute interactive verification task (e.g. proof clause sequencer or academic register evaluator) to test if the learner can now independently assemble the formal English scientific derivation from the original curriculum.
+Do NOT test unrelated trivia or unmentioned formulas.
