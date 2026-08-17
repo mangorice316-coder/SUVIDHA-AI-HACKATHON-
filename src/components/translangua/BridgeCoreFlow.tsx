@@ -8,6 +8,7 @@ import {
 import { audioEngine } from '../../services/audioEngine';
 import { Hero3DCanvas } from '../common/Hero3DCanvas';
 import { LottieSuccessAnimation } from '../common/LottieSuccessAnimation';
+import { ScrollDriven3DExperience } from '../common/ScrollDriven3DExperience';
 
 interface TermItem {
   id: string;
@@ -373,6 +374,9 @@ export const BridgeCoreFlow: React.FC = () => {
               <FileText size={16} /> Paste Custom Lesson
             </button>
           </div>
+
+          {/* Interactive 3D Scroll-Driven UI Explainer */}
+          <ScrollDriven3DExperience />
 
           <div style={{ fontSize: '12px', color: 'var(--text-muted)', borderTop: '1px solid var(--border-subtle)', paddingTop: '14px' }}>
             🛡️ <strong>"Don't replace the lesson. Bridge the learner into it."</strong> Zero login, 0ms offline latency, 100% public.
