@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { TranslanguaStudySet, SupportedLanguage } from '../../types/translangua';
 import { TRANSLANGUA_PRESET_STUDIES } from '../../services/fixtures';
+import { BridgeCoreFlow } from './BridgeCoreFlow';
 import { DualLayerCard } from './DualLayerCard';
 import { VocabularyBridge } from './VocabularyBridge';
 import { ProofAssembler } from './ProofAssembler';
@@ -41,9 +42,11 @@ export const TransLanguaView: React.FC = () => {
       {/* Top Banner */}
       <div className="judge-banner">
         <div className="judge-banner-content">
-          <span className="judge-tag">Pillar 2 Focus</span>
+          <span className="judge-tag" style={{ backgroundColor: 'var(--cyan-primary)', color: '#000' }}>
+            Flagship Module
+          </span>
           <div className="judge-banner-text">
-            <strong>The Linguistic & Academic Register Mismatch:</strong> Standard Google Translate bypasses English and generates technical nonsense. TransLanguaSTEM builds a conceptual bridge connecting vernacular mental models directly to formal English academic derivation mastery.
+            <strong>Project BRIDGE (Concept-to-Academic Register Access):</strong> "Don't replace the lesson. Bridge the learner into it." Removes the linguistic bottleneck between everyday conceptual understanding and formal academic STEM terminology.
           </div>
         </div>
         <div style={{ display: 'flex', gap: '8px' }}>
@@ -64,35 +67,17 @@ export const TransLanguaView: React.FC = () => {
         </div>
       </div>
 
-      {/* Main Grid */}
+      {/* Flagship 5-Step Core Interactive Bridge Flow */}
+      <div style={{ marginBottom: '24px' }}>
+        <BridgeCoreFlow />
+      </div>
+
+      {/* Main Grid: Dual Layer Scaffolding & Academic Register Scorer */}
       <div className="view-grid-two-col">
-        {/* Left Column: Dense Source, Dual Layer Scaffold, & Assembler */}
+        {/* Left Column: Dual Layer Scaffold & Derivation Assembler */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-          {/* Dense English Source Header */}
-          <div className="card">
-            <div className="card-header">
-              <div>
-                <span className="tab-badge" style={{ marginBottom: '6px', display: 'inline-block' }}>
-                  {selectedStudy.domain} • {selectedStudy.sourceCurriculum}
-                </span>
-                <h2 className="card-title" style={{ fontSize: '17px' }}>
-                  {selectedStudy.title}
-                </h2>
-              </div>
-            </div>
-
-            <div style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text-muted)', marginBottom: '4px' }}>
-              Dense NCERT Textbook English Excerpt (The Barrier):
-            </div>
-            <div className="dense-source-box">
-              "{selectedStudy.originalDenseEnglishText}"
-            </div>
-          </div>
-
-          {/* Dual Layer Translanguaging Engine */}
           <DualLayerCard studySet={selectedStudy} />
 
-          {/* Interactive Proof Assembler */}
           <ProofAssembler
             initialPieces={selectedStudy.proofAssemblerPieces}
             expectedSummary={selectedStudy.formalEnglishSummary}
@@ -101,7 +86,6 @@ export const TransLanguaView: React.FC = () => {
 
         {/* Right Column: Academic Register Scorer, Vocabulary Bridge, & Language Controls */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-          {/* Academic Register Scorer */}
           <AcademicRegisterScorer />
 
           {/* Language Selector Bar */}
@@ -127,7 +111,6 @@ export const TransLanguaView: React.FC = () => {
             </div>
           </div>
 
-          {/* Vocabulary Anchors */}
           <VocabularyBridge vocabulary={selectedStudy.vocabularyAnchors} />
         </div>
       </div>
