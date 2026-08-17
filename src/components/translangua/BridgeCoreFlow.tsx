@@ -6,6 +6,7 @@ import {
   Atom, FlaskConical, Dna, Calculator
 } from 'lucide-react';
 import { audioEngine } from '../../services/audioEngine';
+import { Hero3DCanvas } from '../common/Hero3DCanvas';
 
 interface TermItem {
   id: string;
@@ -296,6 +297,9 @@ export const BridgeCoreFlow: React.FC = () => {
           ======================================================== */}
       {currentScreen === 1 && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '22px', padding: '16px 8px', textAlign: 'center', maxWidth: '720px', margin: '0 auto' }}>
+          {/* Interactive 3D WebGL Core */}
+          <Hero3DCanvas />
+
           <div>
             <span style={{ fontSize: '12px', textTransform: 'uppercase', color: 'var(--cyan-primary)', fontWeight: 800, letterSpacing: '1px' }}>
               Universal Learning Access Engine
