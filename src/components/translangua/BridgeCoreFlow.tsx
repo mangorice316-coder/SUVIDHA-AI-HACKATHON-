@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import { audioEngine } from '../../services/audioEngine';
 import { Hero3DCanvas } from '../common/Hero3DCanvas';
+import { LottieSuccessAnimation } from '../common/LottieSuccessAnimation';
 
 interface TermItem {
   id: string;
@@ -908,9 +909,8 @@ export const BridgeCoreFlow: React.FC = () => {
           ======================================================== */}
       {currentScreen === 6 && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '22px', padding: '16px 8px', textAlign: 'center', maxWidth: '680px', margin: '0 auto' }}>
-          <div style={{ width: '60px', height: '60px', borderRadius: '50%', backgroundColor: 'hsla(152, 76%, 45%, 0.2)', border: '2px solid var(--emerald-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto' }}>
-            <CheckCircle2 size={36} color="var(--emerald-primary)" />
-          </div>
+          {/* Lottie Micro-Animation */}
+          <LottieSuccessAnimation size={72} />
 
           <div>
             <h3 style={{ fontSize: '24px', fontWeight: 800, color: 'var(--emerald-primary)' }}>
