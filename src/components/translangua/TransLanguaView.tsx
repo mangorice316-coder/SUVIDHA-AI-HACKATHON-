@@ -1,0 +1,136 @@
+import React, { useState } from 'react';
+import { TranslanguaStudySet, SupportedLanguage } from '../../types/translangua';
+import { TRANSLANGUA_PRESET_STUDIES } from '../../services/fixtures';
+import { DualLayerCard } from './DualLayerCard';
+import { VocabularyBridge } from './VocabularyBridge';
+import { ProofAssembler } from './ProofAssembler';
+import { AcademicRegisterScorer } from './AcademicRegisterScorer';
+import { Globe, BookOpen, Sparkles, FlaskConical, Atom } from 'lucide-react';
+import { audioEngine } from '../../services/audioEngine';
+
+export const TransLanguaView: React.FC = () => {
+  const [selectedStudyKey, setSelectedStudyKey] = useState<string>('maxwell_displacement');
+  const [selectedStudy, setSelectedStudy] = useState<TranslanguaStudySet>(TRANSLANGUA_PRESET_STUDIES.maxwell_displacement);
+  const [activeLanguage, setActiveLanguage] = useState<SupportedLanguage>('ta');
+
+  const languages: { code: SupportedLanguage; name: string; native: string }[] = [
+    { code: 'ta', name: 'Tamil', native: 'தமிழ்' },
+    { code: 'hi', name: 'Hindi', native: 'हिन्दी' },
+    { code: 'te', name: 'Telugu', native: 'తెలుగు' },
+    { code: 'mr', name: 'Marathi', native: 'मराठी' },
+    { code: 'bn', name: 'Bengali', native: 'বাংলা' },
+    { code: 'kn', name: 'Kannada', native: 'ಕನ್ನಡ' }
+  ];
+
+  const handleStudyChange = (key: string) => {
+    setSelectedStudyKey(key);
+    const study = TRANSLANGUA_PRESET_STUDIES[key];
+    if (study) {
+      setSelectedStudy(study);
+      audioEngine.speakAnnouncement(`Loaded ${study.title} from ${study.sourceCurriculum}`);
+    }
+  };
+
+  const handleLanguageChange = (code: SupportedLanguage) => {
+    setActiveLanguage(code);
+    audioEngine.speakAnnouncement(`Switched translanguaging language to ${languages.find(l => l.code === code)?.name}`);
+  };
+
+  return (
+    <div className="tab-pane" role="tabpanel" id="panel-translangua" aria-labelledby="tab-translangua">
+      {/* Top Banner */}
+      <div className="judge-banner">
+        <div className="judge-banner-content">
+          <span className="judge-tag">Pillar 2 Focus</span>
+          <div className="judge-banner-text">
+            <strong>The Linguistic & Academic Register Mismatch:</strong> Standard Google Translate bypasses English and generates technical nonsense. TransLanguaSTEM builds a conceptual bridge connecting vernacular mental models directly to formal English academic derivation mastery.
+          </div>
+        </div>
+        <div style={{ display: 'flex', gap: '8px' }}>
+          <button 
+            className={`btn ${selectedStudyKey === 'maxwell_displacement' ? 'btn-primary' : 'btn-outline'}`}
+            style={{ fontSize: '11px', padding: '6px 10px' }}
+            onClick={() => handleStudyChange('maxwell_displacement')}
+          >
+            <Atom size={13} /> Physics: Maxwell
+          </button>
+          <button 
+            className={`btn ${selectedStudyKey === 'chemical_equilibrium' ? 'btn-primary' : 'btn-outline'}`}
+            style={{ fontSize: '11px', padding: '6px 10px' }}
+            onClick={() => handleStudyChange('chemical_equilibrium')}
+          >
+            <FlaskConical size={13} /> Chem: Le Chatelier
+          </button>
+        </div>
+      </div>
+
+      {/* Main Grid */}
+      <div className="view-grid-two-col">
+        {/* Left Column: Dense Source, Dual Layer Scaffold, & Assembler */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          {/* Dense English Source Header */}
+          <div className="card">
+            <div className="card-header">
+              <div>
+                <span className="tab-badge" style={{ marginBottom: '6px', display: 'inline-block' }}>
+                  {selectedStudy.domain} • {selectedStudy.sourceCurriculum}
+                </span>
+                <h2 className="card-title" style={{ fontSize: '17px' }}>
+                  {selectedStudy.title}
+                </h2>
+              </div>
+            </div>
+
+            <div style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text-muted)', marginBottom: '4px' }}>
+              Dense NCERT Textbook English Excerpt (The Barrier):
+            </div>
+            <div className="dense-source-box">
+              "{selectedStudy.originalDenseEnglishText}"
+            </div>
+          </div>
+
+          {/* Dual Layer Translanguaging Engine */}
+          <DualLayerCard studySet={selectedStudy} />
+
+          {/* Interactive Proof Assembler */}
+          <ProofAssembler
+            initialPieces={selectedStudy.proofAssemblerPieces}
+            expectedSummary={selectedStudy.formalEnglishSummary}
+          />
+        </div>
+
+        {/* Right Column: Academic Register Scorer, Vocabulary Bridge, & Language Controls */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          {/* Academic Register Scorer */}
+          <AcademicRegisterScorer />
+
+          {/* Language Selector Bar */}
+          <div className="card">
+            <div className="card-header">
+              <h3 className="card-title">
+                <Globe size={18} color="var(--cyan-primary)" />
+                <span>Regional Bridge Language</span>
+              </h3>
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px' }}>
+              {languages.map((lang) => (
+                <button
+                  key={lang.code}
+                  className={`btn ${activeLanguage === lang.code ? 'btn-primary' : 'btn-outline'}`}
+                  style={{ fontSize: '12px', padding: '8px 4px', flexDirection: 'column', gap: '2px' }}
+                  onClick={() => handleLanguageChange(lang.code)}
+                >
+                  <span style={{ fontWeight: 700 }}>{lang.native}</span>
+                  <span style={{ fontSize: '10px', opacity: 0.8 }}>{lang.name}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Vocabulary Anchors */}
+          <VocabularyBridge vocabulary={selectedStudy.vocabularyAnchors} />
+        </div>
+      </div>
+    </div>
+  );
+};
