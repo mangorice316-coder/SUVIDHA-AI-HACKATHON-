@@ -321,6 +321,85 @@ export const TRANSLANGUA_PRESET_STUDIES: Record<string, TranslanguaStudySet> = {
       { id: "pp4", correctOrder: 4, englishFragment: "in the direction that counteracts the disturbance.", vernacularHint: "जो व्यवधान का विरोध करती है।", isPlaced: false }
     ],
     formalEnglishSummary: "When a system at dynamic equilibrium is subjected to external perturbation, the equilibrium shifts spontaneously in the direction that counteracts the disturbance."
+  },
+
+  bio_photosynthesis: {
+    id: "bio_photosynthesis",
+    title: "Light Reactions & Photophosphorylation Z-Scheme",
+    topic: "Cellular Bioenergetics",
+    domain: "Biology",
+    sourceCurriculum: "NCERT Biology Class 11 - Chapter 13",
+    originalDenseEnglishText: "Non-cyclic photophosphorylation is initiated when light photon excitation drives electron extraction from water photolysis at Photosystem II, transferring excited electrons down a redox cytochrome gradient to Photosystem I, establishing a proton motive force across the thylakoid lumen that catalyzes ATP synthesis.",
+    brokenLiteralTranslation: {
+      language: "ta",
+      text: "சுழற்சியற்ற ஒளிபாஸ்பரிகரணம் ஒளி ஃபோட்டான் தூண்டுதலால் தொடங்குகிறது...",
+      identifiedErrors: [
+        "Fails to explain that proton accumulation in the lumen acts like water stored behind a hydroelectric dam.",
+        "Missing high-scoring board terminology: 'down a redox gradient', 'chemiosmotic coupling'."
+      ]
+    },
+    vernacularConceptualAnalogy: {
+      language: "ta",
+      analogyTitle: "நீர்வீழ்ச்சி மற்றும் அணை மின் உற்பத்தி ஒப்புமை (Hydroelectric Dam Analogy)",
+      narrative: "சூரிய ஒளி விழும்போது தண்ணீர் பிரிக்கப்பட்டு எலக்ட்ரான்கள் படிக்கட்டுகளில் இறங்குவது போல இறங்குகின்றன. அந்த ஆற்றல் புரோட்டான்களை ஒரு அணைக்கட்டு போல திலக்காய்டு உள்ளே தேக்குகிறது; அவை வெளியே ஓடும்போது டர்பைன் சுழல்வது போல ATP உருவாகிறது.",
+      culturalContextualAnchor: "Grounded in renewable energy and hydroelectric turbine dynamics."
+    },
+    clauseMap: [
+      { id: "b1", clauseIndex: 1, englishClause: "Non-cyclic photophosphorylation is initiated by water photolysis at PS II", vernacularIntuition: "ஒளிச்சேர்க்கை PS II இல் நீர் மூலக்கூறு பிரிக்கப்படுவதன் மூலம் தொடங்குகிறது", mathematicalOperator: "2H_2O \\xrightarrow{h\\nu} 4H^+ + 4e^- + O_2", scientificIdiomAnchor: "initiated by water photolysis at [System]", whyLiteralTranslationFails: "Loses the photo-splitting electrochemical meaning." },
+      { id: "b2", clauseIndex: 2, englishClause: "transferring excited electrons down a redox cytochrome gradient", vernacularIntuition: "ஆற்றல் பெற்ற எலக்ட்ரான்கள் சைட்டோக்ரோம் படிக்கட்டுகள் வழியே கடத்தப்படுகின்றன", mathematicalOperator: "\\text{Redox Chain: } Q \\to Cyt_{b6f} \\to PC \\to PS I", scientificIdiomAnchor: "down a redox potential gradient", whyLiteralTranslationFails: "Fails to explain stepwise electron energy descent." },
+      { id: "b3", clauseIndex: 3, englishClause: "establishing a proton motive force across the thylakoid lumen", vernacularIntuition: "திலக்காய்டு சுவருக்கு இடையே புரோட்டான் அழுத்தத்தை உருவாக்குகிறது", mathematicalOperator: "\\Delta \\mu_{H^+} = F\\Delta \\psi - 2.3RT \\Delta pH", scientificIdiomAnchor: "establishing a proton motive force", whyLiteralTranslationFails: "Translates force as physical push rather than chemiosmotic electrochemical gradient." },
+      { id: "b4", clauseIndex: 4, englishClause: "that catalyzes ATP synthesis via ATP synthase", vernacularIntuition: "இது ATP சிந்தேஸ் நொதி மூலம் ATP மூலக்கூறுகளை உற்பத்தி செய்கிறது", mathematicalOperator: "ADP + P_i + H^+_{lumen} \\to ATP + H^+_{stroma}", scientificIdiomAnchor: "catalyzes ATP synthesis via [Enzyme]", whyLiteralTranslationFails: "Misses the rotary molecular motor coupling mechanism." }
+    ],
+    vocabularyAnchors: [
+      { id: "bv1", formalEnglishTerm: "photolysis of water", vernacularTerm: "நீரின் ஒளிச்சிதைவு", phoneticPronunciation: "fəʊˈtɒlɪsɪs ɒv ˈwɔːtər", colloquialAnalogy: "ஒளியின் ஆற்றலால் நீர் மூலக்கூறு ஆக்சிஜனாகவும் புரோட்டான்களாகவும் உடைவது.", pedagogicalRole: "definition", exampleUsage: "Oxygen is evolved during the photolysis of water at the oxygen-evolving complex." },
+      { id: "bv2", formalEnglishTerm: "proton motive force", vernacularTerm: "புரோட்டான் இயக்க விசை", phoneticPronunciation: "ˈprəʊtɒn ˈməʊtɪv fɔːs", colloquialAnalogy: "அணைக்கட்டில் தேங்கிய நீர் வெளியேறத் துடிக்கும் அழுத்த சக்தி.", pedagogicalRole: "operator", exampleUsage: "The proton motive force drives the rotational catalytic head of ATP synthase." }
+    ],
+    proofAssemblerPieces: [
+      { id: "bp1", correctOrder: 1, englishFragment: "Photon absorption at Photosystem II triggers water photolysis,", vernacularHint: "PS II இல் ஒளி உறிஞ்சப்பட்டு நீர் பிரிகிறது,", isPlaced: false },
+      { id: "bp2", correctOrder: 2, englishFragment: "transferring high-energy electrons down the cytochrome chain", vernacularHint: "எலக்ட்ரான்கள் சங்கிலி வழியே இறங்கி", isPlaced: false },
+      { id: "bp3", correctOrder: 3, englishFragment: "to generate a transmembrane proton gradient", vernacularHint: "புரோட்டான் அழுத்தத்தை உருவாக்கி", isPlaced: false },
+      { id: "bp4", correctOrder: 4, englishFragment: "which powers the chemiosmotic synthesis of ATP.", vernacularHint: "ATP மூலக்கூறை உற்பத்தி செய்கிறது.", isPlaced: false }
+    ],
+    formalEnglishSummary: "Photon absorption at Photosystem II triggers water photolysis, transferring high-energy electrons down the cytochrome chain to generate a transmembrane proton gradient which powers the chemiosmotic synthesis of ATP."
+  },
+
+  math_derivatives: {
+    id: "math_derivatives",
+    title: "Derivatives from First Principles & Chain Rule",
+    topic: "Differential Calculus",
+    domain: "Mathematics",
+    sourceCurriculum: "NCERT Mathematics Class 11 - Chapter 13",
+    originalDenseEnglishText: "The derivative of a real-valued function at a point is defined as the limiting value of the difference quotient as the increment approaches zero, representing the instantaneous rate of change and the geometrical slope of the tangent line.",
+    brokenLiteralTranslation: {
+      language: "te",
+      text: "ఒక బిందువు వద్ద ఒక ఫంక్షన్ యొక్క ఉత్పన్నం వ్యత్యాస భాగం యొక్క పరిమితి విలువగా నిర్వచించబడింది...",
+      identifiedErrors: [
+        "Fails to explain that difference quotient is simply average speed over shrinking time intervals."
+      ]
+    },
+    vernacularConceptualAnalogy: {
+      language: "te",
+      analogyTitle: "స్పీడోమీటర్ మరియు తక్షణ వేగ సాదృశ్యం (Speedometer Instantaneous Speed Analogy)",
+      narrative: "మొత్తం ప్రయాణ సగటు వేగం కాకుండా, మీ బైక్ స్పీడోమీటర్ ఒక నిర్దిష్ట క్షణంలో చూపించే తక్షణ వేగమే డెరివేటివ్ (dy/dx).",
+      culturalContextualAnchor: "Grounded in vehicular speedometers and odometer telemetry."
+    },
+    clauseMap: [
+      { id: "m1", clauseIndex: 1, englishClause: "The derivative of a real-valued function", vernacularIntuition: "ఒక ఫంక్షన్ యొక్క అవకలనం (డెరివేటివ్)", mathematicalOperator: "f'(x) = \\frac{df}{dx}", scientificIdiomAnchor: "The derivative of [Function] with respect to [Variable]", whyLiteralTranslationFails: "Loses mathematical operator rigor." },
+      { id: "m2", clauseIndex: 2, englishClause: "is defined as the limiting value of the difference quotient", vernacularIntuition: "మార్పుల నిష్పత్తి యొక్క అంతిమ లిమిట్ విలువగా నిర్వచించబడింది", mathematicalOperator: "\\lim_{h \\to 0} \\frac{f(x+h) - f(x)}{h}", scientificIdiomAnchor: "the limiting value of the difference quotient", whyLiteralTranslationFails: "Translates quotient as simple division without limit." },
+      { id: "m3", clauseIndex: 3, englishClause: "representing the instantaneous rate of change", vernacularIntuition: "ఇది ఆ క్షణంలో జరిగే తక్షణ మార్పు రేటును సూచిస్తుంది", mathematicalOperator: "\\text{Instantaneous Velocity } v(t) = \\frac{ds}{dt}", scientificIdiomAnchor: "representing the instantaneous rate of change", whyLiteralTranslationFails: "Confuses average change with instantaneous rate." },
+      { id: "m4", clauseIndex: 4, englishClause: "and the geometrical slope of the tangent line", vernacularIntuition: "మరియు వక్రరేఖ స్పర్శరేఖ యొక్క వాలు (Slope)", mathematicalOperator: "m = \\tan \\theta = f'(x_0)", scientificIdiomAnchor: "geometrical slope of the tangent line to the curve", whyLiteralTranslationFails: "Loses geometric coordinate geometry connection." }
+    ],
+    vocabularyAnchors: [
+      { id: "mv1", formalEnglishTerm: "difference quotient", vernacularTerm: "తేడాల నిష్పత్తి", phoneticPronunciation: "ˈdɪf.ər.əns ˈkwəʊ.ʃənt", colloquialAnalogy: "రెండు బిందువుల మధ్య సగటు వేగం (Δy / Δx).", pedagogicalRole: "operator", exampleUsage: "The difference quotient converges to the derivative as interval h approaches zero." },
+      { id: "mv2", formalEnglishTerm: "instantaneous rate of change", vernacularTerm: "తక్షణ మార్పు రేటు", phoneticPronunciation: "ˌɪn.stənˈteɪ.ni.əs reɪt", colloquialAnalogy: "ఒక కచ్చితమైన క్షణంలో స్పీడోమీటర్ చూపించే వేగం.", pedagogicalRole: "physical_quantity", exampleUsage: "Velocity is the instantaneous rate of change of position." }
+    ],
+    proofAssemblerPieces: [
+      { id: "mp1", correctOrder: 1, englishFragment: "The derivative of function f(x)", vernacularHint: "ఫంక్షన్ f(x) యొక్క డెరివేటివ్,", isPlaced: false },
+      { id: "mp2", correctOrder: 2, englishFragment: "is evaluated by taking the limit of the difference quotient", vernacularHint: "తేడాల నిష్పత్తి యొక్క లిమిట్ తీసుకుని,", isPlaced: false },
+      { id: "mp3", correctOrder: 3, englishFragment: "as the interval h approaches zero,", vernacularHint: "వ్యవధి h సున్నాకి చేరినప్పుడు,", isPlaced: false },
+      { id: "mp4", correctOrder: 4, englishFragment: "yielding the instantaneous slope of the tangent.", vernacularHint: "స్పర్శరేఖ తక్షణ వాలును ఇస్తుంది.", isPlaced: false }
+    ],
+    formalEnglishSummary: "The derivative of function f(x) is evaluated by taking the limit of the difference quotient as the interval h approaches zero, yielding the instantaneous slope of the tangent."
   }
 };
 

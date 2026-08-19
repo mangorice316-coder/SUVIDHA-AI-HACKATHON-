@@ -15,14 +15,14 @@ class GeminiService {
   constructor() {
     // Check if key is available in localStorage or env
     if (typeof window !== 'undefined') {
-      this.apiKey = localStorage.getItem('SUVIDHA_GEMINI_API_KEY') || '';
+      this.apiKey = localStorage.getItem('LEARNCRAFT_GEMINI_API_KEY') || localStorage.getItem('SUVIDHA_GEMINI_API_KEY') || '';
     }
   }
 
   public setApiKey(key: string) {
     this.apiKey = key.trim();
     if (typeof window !== 'undefined') {
-      localStorage.setItem('SUVIDHA_GEMINI_API_KEY', this.apiKey);
+      localStorage.setItem('LEARNCRAFT_GEMINI_API_KEY', this.apiKey);
     }
   }
 
@@ -32,6 +32,27 @@ class GeminiService {
 
   public hasApiKey(): boolean {
     return Boolean(this.apiKey && this.apiKey.length > 5);
+  }
+
+  public isConfigured(): boolean {
+    return this.hasApiKey();
+  }
+
+  public async generateContent(prompt: string): Promise<string> {
+    if (!this.hasApiKey()) {
+      throw new Error("Gemini API key not configured");
+    }
+    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${this.model}:generateContent?key=${this.apiKey}`;
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: prompt }] }]
+      })
+    });
+    if (!response.ok) throw new Error(response.statusText);
+    const data = await response.json();
+    return data.candidates?.[0]?.content?.parts?.[0]?.text || '';
   }
 
   // ==========================================
@@ -88,7 +109,15 @@ class GeminiService {
 
     try {
       const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${this.model}:generateContent?key=${this.apiKey}`;
-      const prompt = `Deconstruct this English STEM text into a pedagogical translanguaging card for a ${targetLanguage} speaker. Return strict JSON matching the TranslanguaStudySet interface.\n\nText: ${englishText}`;
+      const systemInstruction = `You are TransLanguaSTEM, a world-class neuro-symbolic educator for STEM students.
+Apply the 5 Elite Learning Principles:
+1. SMART BEGINNER MENTAL MODEL: Start with an intuitive, culture-anchored physical analogy in the student's mother tongue (${targetLanguage}).
+2. INTERNAL MECHANICS & OPERATORS: Explain the rigorous internal scientific and mathematical mechanisms.
+3. COMMON MISCONCEPTIONS & TRANSLATION TRAPS: Identify why literal machine translation fails and where regional students get confused.
+4. TIERED KNOWLEDGE REVISION: Classify vocabulary into MUST KNOW (definition), SHOULD KNOW (operators), and FORMAL EXAM REGISTER (precise English syntax).
+5. SOCRATIC QUESTIONS (NO SPOILERS): Provide sequential steps to test understanding without giving away the final derivation upfront.`;
+
+      const prompt = `${systemInstruction}\n\nDeconstruct this English STEM text into a pedagogical translanguaging card for a ${targetLanguage} speaker. Return strict JSON matching the TranslanguaStudySet interface.\n\nText: ${englishText}`;
 
       const response = await fetch(endpoint, {
         method: 'POST',

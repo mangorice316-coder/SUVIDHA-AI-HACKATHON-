@@ -28,17 +28,23 @@ export const KeyboardCheatSheet: React.FC<KeyboardCheatSheetProps> = ({ isOpen, 
           {/* Global Hotkeys */}
           <div>
             <div style={{ fontWeight: 700, color: 'var(--amber-primary)', marginBottom: '8px' }}>
-              Global Pillar Switchers
+              Study Mode Shortcuts
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '120px 1fr', gap: '8px', background: 'var(--bg-secondary)', padding: '12px', borderRadius: 'var(--radius-sm)' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '100px 1fr', gap: '8px', background: 'var(--bg-secondary)', padding: '12px', borderRadius: 'var(--radius-sm)' }}>
               <kbd style={{ background: 'var(--bg-tertiary)', padding: '2px 8px', borderRadius: '4px', fontFamily: 'var(--font-mono)', textAlign: 'center' }}>1</kbd>
-              <span>Switch to <strong>TopoSTEM</strong> (Spatial & Visual Access)</span>
+              <span><strong>Concept Bridge</strong> (NCERT Textbook Lessons)</span>
 
               <kbd style={{ background: 'var(--bg-tertiary)', padding: '2px 8px', borderRadius: '4px', fontFamily: 'var(--font-mono)', textAlign: 'center' }}>2</kbd>
-              <span>Switch to <strong>TransLanguaSTEM</strong> (Academic Register)</span>
+              <span><strong>Diagram & Circuit Lab</strong> (Spatial Audio Visualizer)</span>
 
               <kbd style={{ background: 'var(--bg-tertiary)', padding: '2px 8px', borderRadius: '4px', fontFamily: 'var(--font-mono)', textAlign: 'center' }}>3</kbd>
-              <span>Switch to <strong>PathWeaver</strong> (Hidden Curriculum)</span>
+              <span><strong>Derivation Practice</strong> (Exam Proof Solver)</span>
+
+              <kbd style={{ background: 'var(--bg-tertiary)', padding: '2px 8px', borderRadius: '4px', fontFamily: 'var(--font-mono)', textAlign: 'center' }}>4</kbd>
+              <span><strong>AI Lesson Scanner</strong> (Paste Custom Notes)</span>
+
+              <kbd style={{ background: 'var(--bg-tertiary)', padding: '2px 8px', borderRadius: '4px', fontFamily: 'var(--font-mono)', textAlign: 'center' }}>5</kbd>
+              <span><strong>My Progress</strong> (Mastery & Vocabulary Bank)</span>
 
               <kbd style={{ background: 'var(--bg-tertiary)', padding: '2px 8px', borderRadius: '4px', fontFamily: 'var(--font-mono)', textAlign: 'center' }}>?</kbd>
               <span>Open this Keyboard Accessibility Guide</span>

@@ -132,14 +132,64 @@ class SpatialAudioEngine {
     osc.stop(now + 0.15);
   }
 
-  public speakAnnouncement(text: string, interrupt: boolean = true) {
+  public playChime(frequency: number = 587.33, duration: number = 0.2) {
+    if (!this.soundEnabled) return;
+    this.initContext();
+    if (!this.ctx) return;
+
+    const now = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(frequency, now);
+    osc.frequency.exponentialRampToValueAtTime(frequency * 1.05, now + duration * 0.3);
+
+    gain.gain.setValueAtTime(0.08, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+
+    osc.connect(gain);
+    gain.connect(this.ctx.destination);
+
+    osc.start(now);
+    osc.stop(now + duration + 0.05);
+  }
+
+  public speakAnnouncement(text: string, interrupt: boolean = true, langCode?: string) {
     if (!this.soundEnabled || typeof window === 'undefined' || !('speechSynthesis' in window)) return;
     if (interrupt) {
       window.speechSynthesis.cancel();
     }
     const utterance = new SpeechSynthesisUtterance(text);
-    utterance.rate = 1.05;
+    utterance.rate = 1.0;
     utterance.pitch = 1.0;
+
+    // Map short codes to BCP 47 language tags
+    const langMap: Record<string, string> = {
+      ta: 'ta-IN',
+      hi: 'hi-IN',
+      te: 'te-IN',
+      mr: 'mr-IN',
+      bn: 'bn-IN',
+      kn: 'kn-IN',
+      en: 'en-IN'
+    };
+
+    if (langCode && langMap[langCode]) {
+      utterance.lang = langMap[langCode];
+    } else if (langCode) {
+      utterance.lang = langCode;
+    }
+
+    // Try finding matching voice if available
+    const voices = window.speechSynthesis.getVoices();
+    if (voices && voices.length > 0 && utterance.lang) {
+      const matchedVoice = voices.find(v => v.lang === utterance.lang || v.lang.startsWith(utterance.lang.slice(0, 2)));
+      if (matchedVoice) {
+        utterance.voice = matchedVoice;
+      }
+    }
+
     window.speechSynthesis.speak(utterance);
   }
 }

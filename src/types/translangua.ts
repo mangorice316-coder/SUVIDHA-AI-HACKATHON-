@@ -57,7 +57,7 @@ export interface TranslanguaStudySet {
   id: string;
   title: string;
   topic: string;
-  domain: 'Physics' | 'Chemistry' | 'Mathematics' | 'Computer Science';
+  domain: 'Physics' | 'Chemistry' | 'Mathematics' | 'Computer Science' | 'Biology' | 'General STEM';
   sourceCurriculum: string;
   originalDenseEnglishText: string;
   brokenLiteralTranslation: {

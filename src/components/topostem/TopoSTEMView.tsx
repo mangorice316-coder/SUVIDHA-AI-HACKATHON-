@@ -106,29 +106,34 @@ export const TopoSTEMView: React.FC = () => {
 
   return (
     <div className="tab-pane" role="tabpanel" id="panel-topostem" aria-labelledby="tab-topostem">
-      {/* Top Banner */}
-      <div className="judge-banner">
-        <div className="judge-banner-content">
-          <span className="judge-tag">Pillar 1 Focus</span>
-          <div className="judge-banner-text">
-            <strong>The Visual Representation Mismatch:</strong> Alt-text turns 2D diagrams into a 200-word linear paragraph that destroys working memory. TopoSTEM converts raster diagrams into an interactive, queryable spatial graph.
+      {/* Diagram Lab Header Banner */}
+      <div className="card" style={{ marginBottom: '20px', background: 'linear-gradient(135deg, rgba(14, 21, 37, 0.95), rgba(15, 23, 42, 0.98))' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '14px' }}>
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+              <span className="hero-pill-badge" style={{ fontSize: '10px' }}>Multi-Sensory Diagram Lab</span>
+              <h2 style={{ fontSize: '18px', fontWeight: 800, margin: 0 }}>Interactive Circuit & Topology Canvas</h2>
+            </div>
+            <p style={{ fontSize: '13px', color: 'var(--text-secondary)', margin: 0 }}>
+              Navigate STEM diagrams with interactive spatial visual cues and stereo audio feedback. Use Arrow Keys or click nodes to explore components.
+            </p>
           </div>
-        </div>
-        <div style={{ display: 'flex', gap: '8px' }}>
-          <button 
-            className={`btn ${selectedPresetKey === 'ac_bridge' ? 'btn-primary' : 'btn-outline'}`}
-            style={{ fontSize: '11px', padding: '6px 10px' }}
-            onClick={() => handlePresetSwitch('ac_bridge')}
-          >
-            <Network size={13} /> AC Bridge Circuit
-          </button>
-          <button 
-            className={`btn ${selectedPresetKey === 'bst_tree' ? 'btn-primary' : 'btn-outline'}`}
-            style={{ fontSize: '11px', padding: '6px 10px' }}
-            onClick={() => handlePresetSwitch('bst_tree')}
-          >
-            <Binary size={13} /> CS Binary Search Tree
-          </button>
+          <div style={{ display: 'flex', gap: '8px' }}>
+            <button 
+              className={`btn ${selectedPresetKey === 'ac_bridge' ? 'btn-primary' : 'btn-outline'}`}
+              style={{ fontSize: '12px', padding: '6px 12px' }}
+              onClick={() => handlePresetSwitch('ac_bridge')}
+            >
+              <Network size={14} /> AC Bridge Circuit (Physics)
+            </button>
+            <button 
+              className={`btn ${selectedPresetKey === 'bst_tree' ? 'btn-primary' : 'btn-outline'}`}
+              style={{ fontSize: '12px', padding: '6px 12px' }}
+              onClick={() => handlePresetSwitch('bst_tree')}
+            >
+              <Binary size={14} /> Binary Search Tree (CS)
+            </button>
+          </div>
         </div>
       </div>
 

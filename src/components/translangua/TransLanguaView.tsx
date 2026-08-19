@@ -39,31 +39,34 @@ export const TransLanguaView: React.FC = () => {
 
   return (
     <div className="tab-pane" role="tabpanel" id="panel-translangua" aria-labelledby="tab-translangua">
-      {/* Top Banner */}
-      <div className="judge-banner">
-        <div className="judge-banner-content">
-          <span className="judge-tag" style={{ backgroundColor: 'var(--cyan-primary)', color: '#000' }}>
-            Flagship Module
-          </span>
-          <div className="judge-banner-text">
-            <strong>Project BRIDGE (Concept-to-Academic Register Access):</strong> "Don't replace the lesson. Bridge the learner into it." Removes the linguistic bottleneck between everyday conceptual understanding and formal academic STEM terminology.
+      {/* Lesson Header Banner */}
+      <div className="card" style={{ marginBottom: '20px', background: 'linear-gradient(135deg, rgba(14, 21, 37, 0.95), rgba(15, 23, 42, 0.98))' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '14px' }}>
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+              <span className="hero-pill-badge" style={{ fontSize: '10px' }}>NCERT Lesson Scaffolding</span>
+              <h2 style={{ fontSize: '18px', fontWeight: 800, margin: 0 }}>Interactive Concept Bridge</h2>
+            </div>
+            <p style={{ fontSize: '13px', color: 'var(--text-secondary)', margin: 0 }}>
+              Click any highlighted term in the original textbook excerpt to see its everyday mental model, native language analogy, and formal exam definition.
+            </p>
           </div>
-        </div>
-        <div style={{ display: 'flex', gap: '8px' }}>
-          <button 
-            className={`btn ${selectedStudyKey === 'maxwell_displacement' ? 'btn-primary' : 'btn-outline'}`}
-            style={{ fontSize: '11px', padding: '6px 10px' }}
-            onClick={() => handleStudyChange('maxwell_displacement')}
-          >
-            <Atom size={13} /> Physics: Maxwell
-          </button>
-          <button 
-            className={`btn ${selectedStudyKey === 'chemical_equilibrium' ? 'btn-primary' : 'btn-outline'}`}
-            style={{ fontSize: '11px', padding: '6px 10px' }}
-            onClick={() => handleStudyChange('chemical_equilibrium')}
-          >
-            <FlaskConical size={13} /> Chem: Le Chatelier
-          </button>
+          <div style={{ display: 'flex', gap: '8px' }}>
+            <button 
+              className={`btn ${selectedStudyKey === 'maxwell_displacement' ? 'btn-primary' : 'btn-outline'}`}
+              style={{ fontSize: '12px', padding: '6px 12px' }}
+              onClick={() => handleStudyChange('maxwell_displacement')}
+            >
+              <Atom size={14} /> Physics: Maxwell's Law
+            </button>
+            <button 
+              className={`btn ${selectedStudyKey === 'chemical_equilibrium' ? 'btn-primary' : 'btn-outline'}`}
+              style={{ fontSize: '12px', padding: '6px 12px' }}
+              onClick={() => handleStudyChange('chemical_equilibrium')}
+            >
+              <FlaskConical size={14} /> Chem: Le Chatelier
+            </button>
+          </div>
         </div>
       </div>
 

@@ -6,12 +6,7 @@ import {
   Atom, FlaskConical, Dna, Calculator
 } from 'lucide-react';
 import { audioEngine } from '../../services/audioEngine';
-import { Hero3DCanvas } from '../common/Hero3DCanvas';
 import { LottieSuccessAnimation } from '../common/LottieSuccessAnimation';
-import { ScrollDriven3DExperience } from '../common/ScrollDriven3DExperience';
-import { SpotlightCard, MagneticButton } from '../common/MotionPrimitives';
-import { HaikeiSvgBackground } from '../common/HaikeiSvgBackground';
-import { RealtimeColorThemePicker } from '../common/RealtimeColorThemePicker';
 
 interface TermItem {
   id: string;
@@ -302,18 +297,9 @@ export const BridgeCoreFlow: React.FC = () => {
           ======================================================== */}
       {currentScreen === 1 && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '22px', padding: '16px 8px', textAlign: 'center', maxWidth: '720px', margin: '0 auto', position: 'relative' }}>
-          {/* Generative Haikei SVG Wave Mesh */}
-          <HaikeiSvgBackground opacity={0.2} />
-
-          {/* Realtime Color Palette Engine */}
-          <RealtimeColorThemePicker />
-
-          {/* Interactive 3D WebGL Core */}
-          <Hero3DCanvas />
-
           <div>
             <span style={{ fontSize: '12px', textTransform: 'uppercase', color: 'var(--cyan-primary)', fontWeight: 800, letterSpacing: '1px' }}>
-              Universal Learning Access Engine
+              Multilingual Learning Access Engine
             </span>
             <h2 style={{ fontSize: '28px', fontWeight: 800, color: 'var(--text-primary)', marginTop: '8px', lineHeight: '1.3' }}>
               Understand the idea.<br />
@@ -377,18 +363,15 @@ export const BridgeCoreFlow: React.FC = () => {
 
           <div style={{ display: 'flex', justifyContent: 'center', gap: '14px' }}>
             <button className="btn btn-primary" style={{ padding: '12px 26px', fontSize: '15px' }} onClick={() => handleStartDemo('physics_maxwell')}>
-              <Play size={16} /> Launch Instant 2-Minute Demo
+              <Play size={16} /> Start Interactive Lesson
             </button>
             <button className="btn btn-secondary" style={{ padding: '12px 20px', fontSize: '14px' }} onClick={() => { setIsCustomMode(true); setCurrentScreen(2); }}>
               <FileText size={16} /> Paste Custom Lesson
             </button>
           </div>
 
-          {/* Interactive 3D Scroll-Driven UI Explainer */}
-          <ScrollDriven3DExperience />
-
           <div style={{ fontSize: '12px', color: 'var(--text-muted)', borderTop: '1px solid var(--border-subtle)', paddingTop: '14px' }}>
-            🛡️ <strong>"Don't replace the lesson. Bridge the learner into it."</strong> Zero login, 0ms offline latency, 100% public.
+            🛡️ <strong>"Don't replace the lesson. Bridge the learner into it."</strong> Zero login, 0ms offline latency, 100% free learning.
           </div>
         </div>
       )}

@@ -42,7 +42,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--emerald-primary)', fontWeight: 600, marginBottom: '4px' }}>
               <ShieldCheck size={16} /> Instant Offline Fixture Engine Active
             </div>
-            SUVIDHA ULAE runs 100% reliably out of the box with zero configuration using deterministic high-fidelity benchmark fixtures. An API key is optional for custom live image/text prompts.
+            LearnCraft runs 100% reliably out of the box with zero configuration using deterministic high-fidelity benchmark fixtures. An API key is optional for custom live image/text prompts.
           </div>
 
           <div>

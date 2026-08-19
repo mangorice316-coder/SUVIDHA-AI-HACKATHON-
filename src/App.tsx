@@ -1,20 +1,40 @@
 import React, { useState, useEffect } from 'react';
-import { ActiveModule, AccessibilitySettings } from './types/common';
+import { AccessibilitySettings, UserProfile } from './types/common';
+import { SupportedLanguage } from './types/translangua';
 import { Header } from './components/common/Header';
-import { ModuleNav } from './components/common/ModuleNav';
-import { OnePagerModal } from './components/common/OnePagerModal';
-import { JudgeWalkthrough } from './components/common/JudgeWalkthrough';
+import { LandingPage } from './components/landing/LandingPage';
+import { StudentLoginPage } from './components/auth/StudentLoginPage';
+import { AppLoadingScreen } from './components/common/AppLoadingScreen';
+import { SubjectSelectScreen, SubjectOption } from './components/subject_select/SubjectSelectScreen';
+import { SubjectStudyView } from './components/subject_study/SubjectStudyView';
+import { AdaptiveWorkflowStudio } from './components/workflow/AdaptiveWorkflowStudio';
 import { SettingsModal } from './components/common/SettingsModal';
 import { KeyboardCheatSheet } from './components/common/KeyboardCheatSheet';
-import { TopoSTEMView } from './components/topostem/TopoSTEMView';
-import { TransLanguaView } from './components/translangua/TransLanguaView';
-import { PathWeaverView } from './components/pathweaver/PathWeaverView';
 import { audioEngine } from './services/audioEngine';
 
+const STORAGE_KEY_PROFILE = 'suvidha_stem_user_profile';
+
 export const App: React.FC = () => {
-  const [activeModule, setActiveModule] = useState<ActiveModule>('topostem');
-  const [isOnePagerOpen, setIsOnePagerOpen] = useState<boolean>(false);
-  const [isJudgeGuideOpen, setIsJudgeGuideOpen] = useState<boolean>(false);
+  const [userProfile, setUserProfile] = useState<UserProfile | null>(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY_PROFILE);
+      return saved ? JSON.parse(saved) : null;
+    } catch {
+      return null;
+    }
+  });
+
+  const [isLandingView, setIsLandingView] = useState<boolean>(() => {
+    // Show landing view by default if no user profile exists
+    return !localStorage.getItem(STORAGE_KEY_PROFILE);
+  });
+
+  const [isAdaptiveWorkflowOpen, setIsAdaptiveWorkflowOpen] = useState<boolean>(false);
+  const [isLoadingProfile, setIsLoadingProfile] = useState<boolean>(false);
+  const [pendingProfile, setPendingProfile] = useState<UserProfile | null>(null);
+
+  const [selectedSubject, setSelectedSubject] = useState<SubjectOption | null>(null);
+  const [selectedLanguage, setSelectedLanguage] = useState<SupportedLanguage>('ta');
   const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
   const [isShortcutsOpen, setIsShortcutsOpen] = useState<boolean>(false);
 
@@ -25,94 +45,185 @@ export const App: React.FC = () => {
     fontSize: 'normal'
   });
 
-  // Global Key Shortcut Listener (1, 2, 3, ?)
+  // Sync home language with user profile
+  useEffect(() => {
+    if (userProfile?.homeLanguage) {
+      setSelectedLanguage(userProfile.homeLanguage);
+    }
+  }, [userProfile]);
+
+  // Global Key Shortcut Listener ('?', ESC)
   useEffect(() => {
     const handleGlobalKey = (e: KeyboardEvent) => {
-      // Don't intercept if user is typing in form inputs
       if (['INPUT', 'TEXTAREA', 'SELECT'].includes((e.target as HTMLElement).tagName)) {
         return;
       }
 
-      if (e.key === '1') {
-        setActiveModule('topostem');
-        audioEngine.speakAnnouncement("Switched to TopoSTEM: Spatial Audio and Visual Representation Module.");
-      } else if (e.key === '2') {
-        setActiveModule('translangua');
-        audioEngine.speakAnnouncement("Switched to TransLanguaSTEM: Academic Register and Translanguaging Module.");
-      } else if (e.key === '3') {
-        setActiveModule('pathweaver');
-        audioEngine.speakAnnouncement("Switched to PathWeaver: Hidden Curriculum and Action DAG Module.");
-      } else if (e.key === '?') {
+      if (e.key === '?') {
         setIsShortcutsOpen(prev => !prev);
+      } else if (e.key === 'Escape' && selectedSubject) {
+        setSelectedSubject(null);
+        audioEngine.speakAnnouncement("Returned to Subject Selection menu.");
       }
     };
 
     window.addEventListener('keydown', handleGlobalKey);
     return () => window.removeEventListener('keydown', handleGlobalKey);
-  }, []);
+  }, [selectedSubject]);
 
   const handleUpdateSettings = (newSettings: Partial<AccessibilitySettings>) => {
     setSettings(prev => ({ ...prev, ...newSettings }));
   };
 
+  const handleLogin = (profile: UserProfile) => {
+    setPendingProfile(profile);
+    setIsLoadingProfile(true);
+    setIsLandingView(false);
+  };
+
+  const handleLoadingComplete = () => {
+    if (pendingProfile) {
+      setUserProfile(pendingProfile);
+      setSelectedLanguage(pendingProfile.homeLanguage);
+      try {
+        localStorage.setItem(STORAGE_KEY_PROFILE, JSON.stringify(pendingProfile));
+      } catch {
+        // ignore localStorage errors
+      }
+    }
+    setIsLoadingProfile(false);
+    setPendingProfile(null);
+  };
+
+  const handleSwitchProfile = () => {
+    setUserProfile(null);
+    setSelectedSubject(null);
+    try {
+      localStorage.removeItem(STORAGE_KEY_PROFILE);
+    } catch {
+      // ignore
+    }
+    audioEngine.speakAnnouncement("Switched profile. Returning to student login.");
+  };
+
   return (
     <div className="app-container">
-      {/* Universal Header */}
+      {/* Universal Learning Header */}
       <Header
         settings={settings}
+        userProfile={userProfile}
         onUpdateSettings={handleUpdateSettings}
-        onOpenOnePager={() => setIsOnePagerOpen(true)}
-        onOpenJudgeGuide={() => setIsJudgeGuideOpen(true)}
         onOpenSettings={() => setIsSettingsOpen(true)}
         onOpenShortcuts={() => setIsShortcutsOpen(true)}
-      />
-
-      {/* Tri-Pillar Navigation Tabs */}
-      <ModuleNav
-        activeModule={activeModule}
-        onSelectModule={(mod) => {
-          setActiveModule(mod);
-          audioEngine.speakAnnouncement(`Loaded ${mod.toUpperCase()} Module.`);
+        onSwitchProfile={userProfile ? handleSwitchProfile : undefined}
+        isLandingView={isLandingView}
+        onToggleLanding={() => {
+          setIsLandingView(prev => !prev);
+          audioEngine.speakAnnouncement(isLandingView ? "Entering Student Studio." : "Returned to Platform Overview.");
         }}
       />
 
-      {/* Main Content Area */}
+      {/* Main Content Flow */}
       <main className="main-content" role="main">
-        {activeModule === 'topostem' && <TopoSTEMView />}
-        {activeModule === 'translangua' && <TransLanguaView />}
-        {activeModule === 'pathweaver' && <PathWeaverView />}
+        {isLandingView ? (
+          /* Landing Page Overview */
+          <LandingPage
+            onStartLearning={() => {
+              setIsLandingView(false);
+              audioEngine.speakAnnouncement("Opening Student Studio.");
+            }}
+          />
+        ) : isAdaptiveWorkflowOpen ? (
+          /* Adaptive Diagnostic & Goal Onboarding Studio */
+          <AdaptiveWorkflowStudio
+            onCompleteWorkflow={(goalData) => {
+              setIsAdaptiveWorkflowOpen(false);
+              if (!userProfile) {
+                const autoProfile: UserProfile = {
+                  name: 'Alex Scholar',
+                  studentClass: 'class_12',
+                  board: 'cbse',
+                  homeLanguage: selectedLanguage,
+                  goalSubject: goalData.subject,
+                  createdAt: new Date().toISOString()
+                };
+                setUserProfile(autoProfile);
+                try {
+                  localStorage.setItem(STORAGE_KEY_PROFILE, JSON.stringify(autoProfile));
+                } catch {}
+              }
+              // Launch directly into the primary physics module
+              setSelectedSubject({
+                id: 'physics_12',
+                name: 'Physics',
+                domain: 'Electrodynamics & EM Waves',
+                grade: 'Class 12 (CBSE / NCERT)',
+                icon: 'physics',
+                title: "Maxwell's Displacement Current & Induction",
+                summary: 'Understand magnetic field continuity across capacitor gaps and derive the modified Ampere-Maxwell Law.',
+                curriculum: 'CBSE Class 12 Physics — Chapter 8',
+                defaultLanguage: selectedLanguage,
+                studyKey: 'maxwell_displacement'
+              });
+            }}
+            onCancel={() => setIsAdaptiveWorkflowOpen(false)}
+          />
+        ) : isLoadingProfile && pendingProfile ? (
+          /* Phase 1: Animated Profile Loading Screen */
+          <AppLoadingScreen
+            profile={pendingProfile}
+            onComplete={handleLoadingComplete}
+          />
+        ) : !userProfile ? (
+          /* Phase 2: Student Login & Onboarding Screen */
+          <StudentLoginPage
+            onLogin={handleLogin}
+            initialProfile={userProfile}
+          />
+        ) : !selectedSubject ? (
+          /* Phase 3: Personalized Subject Selection Screen */
+          <SubjectSelectScreen
+            userProfile={userProfile}
+            onSelectSubject={(subject) => {
+              setSelectedSubject(subject);
+              setSelectedLanguage(subject.defaultLanguage || userProfile.homeLanguage);
+            }}
+            selectedLanguage={selectedLanguage}
+            onLanguageChange={(lang) => setSelectedLanguage(lang)}
+            onSwitchProfile={handleSwitchProfile}
+            onStartAdaptiveWorkflow={() => setIsAdaptiveWorkflowOpen(true)}
+          />
+        ) : (
+          /* Phase 4: Dedicated Subject Study Screen */
+          <SubjectStudyView
+            subject={selectedSubject}
+            onBackToSubjects={() => {
+              setSelectedSubject(null);
+              audioEngine.speakAnnouncement("Returned to Subject Selection screen.");
+            }}
+            selectedLanguage={selectedLanguage}
+            onLanguageChange={(lang) => setSelectedLanguage(lang)}
+          />
+        )}
       </main>
 
-      {/* Footer */}
+      {/* Educational Footer */}
       <footer style={{ backgroundColor: 'var(--bg-secondary)', borderTop: '1px solid var(--border-subtle)', padding: '20px', textAlign: 'center', fontSize: '12px', color: 'var(--text-muted)' }}>
         <div style={{ maxWidth: '1440px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px' }}>
           <div>
-            <strong>SUVIDHA ULAE</strong> — Built for the <em>SUVIDHA AI Virtual Hackathon 2026</em>
+            <strong>SUVIDHA STEM Learn</strong> — Multilingual Learning Access Platform for STEM Students
           </div>
           <div style={{ display: 'flex', gap: '16px' }}>
+            <span>NCERT & State Board Aligned</span>
+            <span>•</span>
             <span>WCAG 2.1 AAA Compliant</span>
             <span>•</span>
-            <span>100% Offline-Resilient</span>
-            <span>•</span>
-            <button onClick={() => setIsOnePagerOpen(true)} style={{ color: 'var(--cyan-primary)', cursor: 'pointer' }}>
-              Submission Dossier
-            </button>
+            <span>Tamil, Hindi, Telugu, Marathi, Bengali & Kannada</span>
           </div>
         </div>
       </footer>
 
       {/* Modals */}
-      <OnePagerModal
-        isOpen={isOnePagerOpen}
-        onClose={() => setIsOnePagerOpen(false)}
-      />
-
-      <JudgeWalkthrough
-        isOpen={isJudgeGuideOpen}
-        onClose={() => setIsJudgeGuideOpen(false)}
-        onSelectModule={(mod) => setActiveModule(mod)}
-      />
-
       <SettingsModal
         isOpen={isSettingsOpen}
         onClose={() => setIsSettingsOpen(false)}

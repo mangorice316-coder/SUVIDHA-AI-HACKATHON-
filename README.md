@@ -1,6 +1,5 @@
-# BRIDGE (SUVIDHA Universal Learning Access Engine)
+# LearnCraft (Universal Learning Access Engine)
 > **"Don't replace the lesson. Bridge the learner into it."**  
-> Official Submission for the **SUVIDHA AI Virtual Hackathon 2026**  
 > *A task-aware learning access engine for multilingual STEM learners.*
 
 ---
